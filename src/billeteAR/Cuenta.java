@@ -67,6 +67,7 @@ public abstract class Cuenta {
     
     public abstract void aplicarMultiplicador(double tasa);
 
+
 	public double getSaldo() {
 	
 		return this.saldo;
