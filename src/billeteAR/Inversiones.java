@@ -18,9 +18,7 @@ public abstract class Inversiones {
 	}
 	
 
-	public abstract double dineroGenerado(Cuenta cuenta);{
-		
-	}
+	public abstract double dineroGenerado(Cuenta cuenta);
 	
 	public double cancelar(Cuenta cuenta) {
 		if (!this.esPrecancelable) {

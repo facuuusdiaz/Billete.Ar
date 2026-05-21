@@ -69,7 +69,7 @@ public abstract class Cuenta {
 
 	public double getSaldo() {
 	
-		return this.getSaldo();
+		return this.saldo;
 	}
     
 }
