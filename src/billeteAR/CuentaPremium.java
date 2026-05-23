@@ -4,8 +4,8 @@ package billeteAR;
 public class CuentaPremium extends Cuenta {
     private double saldoMinimo;
 
-    public CuentaPremium(String dniUsuario, String cvu, String alias, double saldo, double saldoMinimo) {
-        super(dniUsuario, cvu, alias, saldo);
+    public CuentaPremium(String dniUsuario, double saldo, double saldoMinimo) {
+        super(dniUsuario,  saldo);
         this.saldoMinimo = saldoMinimo;
     }
 

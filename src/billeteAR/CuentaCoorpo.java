@@ -5,8 +5,8 @@ public class CuentaCoorpo extends Cuenta {
     private String cuitEmpresa;
     private boolean certificacion;
 
-    public CuentaCoorpo(String dniUsuario, String cvu, String alias, double saldo, String cuitEmpresa, boolean certificacion) {
-        super(dniUsuario, cvu, alias, saldo);
+    public CuentaCoorpo(String dniUsuario,  double saldo, String cuitEmpresa, boolean certificacion) {
+        super(dniUsuario,  saldo);
         this.cuitEmpresa = cuitEmpresa;
         this.certificacion = certificacion;
     }

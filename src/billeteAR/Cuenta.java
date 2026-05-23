@@ -1,60 +1,69 @@
 package billeteAR;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Cuenta {
-    protected String dniUsuario; // Asociamos la cuenta al DNI del usuario dueño
+    protected String dniUsuario; 
     protected String cvu;
     protected String alias;
     protected double saldo;
     protected List<Actividad> historial; 
     protected int cantidadTransacciones;
 
-    public Cuenta(String dniUsuario, String cvu, String alias, double saldo) {
+    // CONSTRUCTOR ACTUALIZADO: Ya no pide CVU ni Alias por parámetro
+    public Cuenta(String dniUsuario, double saldo) {
         this.dniUsuario = dniUsuario;
-        this.cvu = cvu;
-        this.alias = alias;
+        this.cvu = generarCVU();       // Se autogenera al nacer
+        this.alias = generarAlias();   // Se autogenera al nacer
         this.saldo = saldo;
         this.historial = new ArrayList<>();
         this.cantidadTransacciones = 0;
     }
 
-    // PUNTOS 3 y 10: Retorna el String exacto solicitado para las listas
+    // --- MÉTODOS PRIVADOS PARA GENERAR CVU Y ALIAS ---
+    private String generarCVU() {
+        StringBuilder nuevoCvu = new StringBuilder();
+        for (int i = 0; i < 22; i++) {
+            nuevoCvu.append((int) (Math.random() * 10));
+        }
+        return nuevoCvu.toString();
+    }
+
+    private String generarAlias() {
+        String[] palabras = {"sol", "luna", "rio", "mate", "pampa", "tango"};
+        String p1 = palabras[(int) (Math.random() * palabras.length)];
+        String p2 = palabras[(int) (Math.random() * palabras.length)];
+        String p3 = palabras[(int) (Math.random() * palabras.length)];
+        return p1 + "." + p2 + "." + p3;
+    }
+
+    // --- MÉTODOS PÚBLICOS DE LA CUENTA ---
+
     public String obtenerFormatoLista() {
         return this.getTipo() + ": " + this.alias + " (" + this.cvu + ")";
     }
 
-    // Método abstracto para obtener el nombre del tipo de cuenta
     public abstract String getTipo();
 
-    // Actualizado: Ahora pide el DNI destino para armar el objeto Transferencia completo
     public void transferirDinero(String dniDestino, String cvuDestino, double monto) {
         boolean aprobado = (this.saldo >= monto);
-        
         if (aprobado) {
             this.saldo -= monto;
         }
-        
         this.cantidadTransacciones++;
         
-        // Se guarda SIEMPRE en el historial, especificando si fue aprobado o rechazado
         Transferencia nuevaTransferencia = new Transferencia(monto, this.dniUsuario, this.cvu, dniDestino, cvuDestino, aprobado);
         this.historial.add(nuevaTransferencia);
     }
 
-    // Actualizado: Ahora recibe el plazo de la inversión
     public void invertir(Inversiones inversion, int plazo, double monto) {
         boolean aprobado = (this.saldo >= monto);
-        
         if (aprobado) {
             this.saldo -= monto;
         }
-        
         this.cantidadTransacciones++;
         
-        // Se guarda en el historial con su respectivo estado
         TransaccionInversion nuevaInversion = new TransaccionInversion(monto, this.dniUsuario, this.cvu, inversion, plazo, aprobado);
         this.historial.add(nuevaInversion);
     }
@@ -67,14 +76,11 @@ public abstract class Cuenta {
     
     public abstract void aplicarMultiplicador(double tasa);
 
-
-	public double getSaldo() {
-	
-		return this.saldo;
-	}
-	
-	public int getCantidadTransacciones() {
-	    return this.cantidadTransacciones;
-	}
+    public double getSaldo() {
+        return this.saldo;
+    }
     
+    public int getCantidadTransacciones() {
+        return this.cantidadTransacciones;
+    }
 }
