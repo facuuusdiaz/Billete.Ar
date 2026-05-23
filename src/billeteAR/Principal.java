@@ -17,7 +17,7 @@ public class Principal {
         Utilitarios.actualizarCotizacion("FLE", 1.02);
         System.out.println("Cotizaciones iniciales - USD: 1020.50 | EUR: 1100.25 | FLE: 1.02\n");
 
-        IBilletera billetera = new Billetera();
+        IBilletera billetera = new Billete();
 
         System.out.println("[0] Estado inicial de la billetera: ");
         System.out.println(billetera);

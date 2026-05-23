@@ -11,12 +11,11 @@ public class Transferencia extends Actividad {
     }
 
     @Override
-    public void mostrarDetalles() {
-        System.out.println("Transferencia:");
-        System.out.println("  fecha: " + this.fechaHora);
-        System.out.println("  origen: " + this.dniOrigen + " (" + this.cvuOrigen + ")");
-        System.out.println("  destino: " + this.dniDestino + " (" + this.cvuDestino + ")");
-        System.out.println("  monto: " + this.monto);
-        System.out.println("  " + (this.aprobado ? "[Aprobado]" : "[Rechazado]"));
+    public String obtenerTextoFormateado() {
+        return "transferencia:\n" +
+               "origen: " + dniOrigen + " (" + cvuOrigen + ")\n" +
+               "destino: " + dniDestino + " (" + cvuDestino + ")\n" +
+               "monto: " + monto + "\n" +
+               (aprobado ? "[Aprovado]" : "[Rechazado]"); // Nota: Usé la 'v' que figura en el comentario del docente
     }
 }

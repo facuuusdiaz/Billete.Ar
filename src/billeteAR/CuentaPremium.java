@@ -1,24 +1,19 @@
 package billeteAR;
 
-
 public class CuentaPremium extends Cuenta {
     private double saldoMinimo;
 
-    public CuentaPremium(String dniUsuario, double saldo, double saldoMinimo) {
-        super(dniUsuario,  saldo);
+    // CONSTRUCTOR CORREGIDO
+    public CuentaPremium(String dniUsuario, String alias, double saldo, double saldoMinimo) {
+        super(dniUsuario, alias, saldo); 
         this.saldoMinimo = saldoMinimo;
     }
 
     @Override
-    public String getTipo() {
-        return "Premium";
-    }
-
-    // ... acá sigue tu método aplicarMultiplicador tal cual lo tenías ...
+    public String getTipo() { return "Premium"; }
 
     @Override
     public void aplicarMultiplicador(double tasa) {
-        // Solo aplica si el cliente tiene el saldo mínimo requerido
         if (this.saldo >= saldoMinimo) {
             this.saldo = this.saldo * tasa;
             this.cantidadTransacciones++;
@@ -28,4 +23,3 @@ public class CuentaPremium extends Cuenta {
         }
     }
 }
-
