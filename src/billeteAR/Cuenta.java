@@ -72,5 +72,9 @@ public abstract class Cuenta {
 	
 		return this.saldo;
 	}
+	
+	public int getCantidadTransacciones() {
+	    return this.cantidadTransacciones;
+	}
     
 }

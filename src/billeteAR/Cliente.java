@@ -41,5 +41,8 @@ public class Cliente {
 	}
 	
 	
+	public List<Cuenta> getCuentas() {
+	    return this.cuentas; 
+	}
 	
 }
