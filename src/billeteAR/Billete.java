@@ -1,8 +1,7 @@
 package billeteAR;
 
 import java.util.HashMap;
-
-
+import java.time.LocalDate;
 import java.util.*;
 
 public class Billete implements IBilletera {
@@ -12,6 +11,7 @@ public class Billete implements IBilletera {
     private Map<String, Cuenta> cuentasPorCvu; // Optimización de búsqueda O(1)
     private Map<Integer, Inversiones> inversionesPorId; // Optimización O(1)
     private List<Actividad> historialGlobal; 
+    private Map<Integer, String> inversionCuentaMap;
 
     public Billete() {
         this.clientes = new HashMap<>();
@@ -19,6 +19,7 @@ public class Billete implements IBilletera {
         this.cuentasPorCvu = new HashMap<>();
         this.inversionesPorId = new HashMap<>();
         this.historialGlobal = new ArrayList<>();
+        this.inversionCuentaMap = new HashMap<>();
     }
 
     @Override
@@ -137,6 +138,7 @@ public class Billete implements IBilletera {
             c.debitar(monto);
             cl.sumarMontoInversion(monto);
             inversionesPorId.put(inv.getId(), inv);
+            inversionCuentaMap.put(inv.getId(), cvu);
         }
 
         TransaccionInversion ti = new TransaccionInversion(monto, dni, cvu, inv.getTipoInversion(), plazo, aprobado);
@@ -182,6 +184,7 @@ public class Billete implements IBilletera {
         c.depositar(reintegro);
         cl.restarMontoInversion(inv.getMonto());
         inversionesPorId.remove(idInversion); // Se remueve por completarse
+        inversionCuentaMap.remove(idInversion);
     }
 
 
@@ -245,5 +248,50 @@ public class Billete implements IBilletera {
             res.add(todas.get(i).obtenerFormatoLista());
         }
         return res;
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Resumen Billetera:\n");
+        sb.append("Clientes: ").append(clientes.values()).append("\n");
+        sb.append("Empresas: ").append(empresas.values()).append("\n");
+        sb.append("Total de movimientos: ").append(historialGlobal.size());
+        return sb.toString();
+    }
+     
+    @Override
+    public void procesarInversionesQueVencenHoy() {
+        List<Integer> finalizadas = new ArrayList<>();
+
+        for (Inversiones inv : inversionesPorId.values()) {
+            LocalDate fechaVencimiento = inv.getFechaInicio().plusDays(inv.getDias());
+
+            // Si la fecha de vencimiento es HOY o ya pasó
+            if (fechaVencimiento.isEqual(Utilitarios.hoy()) || fechaVencimiento.isBefore(Utilitarios.hoy())) {
+                String cvu = inversionCuentaMap.get(inv.getId());
+                Cuenta c = cuentasPorCvu.get(cvu);
+                Cliente cl = clientes.get(c.getDniUsuario());
+
+                // Calculamos ganancia y total a devolver
+                double ganancia = inv.dineroGenerado(c);
+                double totalADevolver = inv.getMonto() + ganancia;
+
+                // Devolvemos la plata e impactamos los saldos
+                c.depositar(totalADevolver);
+                cl.restarMontoInversion(inv.getMonto());
+
+                // Guardamos el ID para borrarla de la lista activa
+                finalizadas.add(inv.getId());
+
+                System.out.println("Inversión ID " + inv.getId() + " finalizada con éxito. Monto devuelto: $" + totalADevolver);
+            }
+        }
+
+        // Limpiamos los mapas de las inversiones que ya terminaron
+        for (Integer id : finalizadas) {
+            inversionesPorId.remove(id);
+            inversionCuentaMap.remove(id);
+        }
     }
 }

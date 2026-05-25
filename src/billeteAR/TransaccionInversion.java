@@ -13,6 +13,7 @@ public class TransaccionInversion extends Actividad {
     @Override
     public String obtenerTextoFormateado() {
         return "inversion:\n" +
+        		"fecha: " + this.fechaHora + "\n" +
                "origen: " + dniOrigen + " (" + cvuOrigen + ")\n" +
                "desc: " + tipoInversion + "\n" +
                "monto: " + monto + "\n" +

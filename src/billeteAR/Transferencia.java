@@ -13,6 +13,7 @@ public class Transferencia extends Actividad {
     @Override
     public String obtenerTextoFormateado() {
         return "transferencia:\n" +
+        	   "fecha: " + this.fechaHora + "\n" + 
                "origen: " + dniOrigen + " (" + cvuOrigen + ")\n" +
                "destino: " + dniDestino + " (" + cvuDestino + ")\n" +
                "monto: " + monto + "\n" +

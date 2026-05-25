@@ -32,6 +32,11 @@ public class Empresa {
     public boolean estaAutorizado(String dni) {
         return personasAutorizadas.contains(dni);
     }
+    
+    @Override
+    public String toString() {
+        return "Empresa: " + nombreFantasia + " (CUIT: " + cuit + ") | Contacto: " + nombreContacto;
+    }
 
     public String getCuit() { return cuit; }
 }

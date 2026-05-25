@@ -37,6 +37,11 @@ public abstract class Cuenta {
         this.historial.add(act);
         this.cantidadTransacciones++;
     }
+    
+    @Override
+    public String toString() {
+        return "[" + getTipo() + "] Alias: " + alias + " | CVU: " + cvu + " | Saldo: $" + saldo;
+    }
 
     public void depositar(double monto) { this.saldo += monto; }
     public void debitar(double monto) { this.saldo -= monto; }

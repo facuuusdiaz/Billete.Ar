@@ -26,6 +26,15 @@ public class Cliente {
         }
         cuentas.add(c);
     }
+    
+    @Override
+    public String toString() {
+        String info = "Cliente: " + nombre + " (DNI: " + dni + ") | Total Invertido: $" + totalInvertido + "\n";
+        for (Cuenta c : cuentas) {
+            info += "    -> " + c.toString() + "\n";
+        }
+        return info;
+    }
 	
     public double obtenerTotalInvertido() { return this.totalInvertido; }
     public void sumarMontoInversion(double monto) { this.totalInvertido += monto; }

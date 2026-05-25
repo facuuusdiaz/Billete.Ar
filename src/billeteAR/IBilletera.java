@@ -252,6 +252,6 @@ import java.util.*;
 	     * Utilitarios.
 	     * 
 	     */
-	    // void procesarInversionesQueVencenHoy();
+	    void procesarInversionesQueVencenHoy();
 }
 

@@ -27,6 +27,8 @@ public abstract class Inversiones {
         return this.monto + (this.dineroGenerado(cuenta) / 2.0);
     }
 
+    public LocalDate getFechaInicio() { return this.fechaInicio; }
+    public int getDias() { return this.dias; }
     public int getId() { return this.id; }
     public double getMonto() { return this.monto; }
 }

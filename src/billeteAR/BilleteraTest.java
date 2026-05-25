@@ -206,5 +206,37 @@ public class BilleteraTest {
         // Alice hizo 2 transferencias
         assertEquals(2, historialAlice.size());
     }
+    
+    @Test
+    public void testProcesarInversionesQueVencenHoy() {
+        // 1. Configuramos el escenario
+        String cvuAlice = billetera.crearCuentaPremium("11111111", "alice.bonus", 2000000);
+        
+        // 2. Alice hace una inversión a 30 días
+        billetera.realizarInversionRentaFija("11111111", cvuAlice, 500000, 30);
+        
+        // Verificamos que se descontó el dinero de la cuenta
+        assertEquals(1500000.0, billetera.obtenerSaldoDisponible(cvuAlice), 0.01);
+        assertEquals(500000.0, billetera.obtenerTotalInvertido("11111111"), 0.01);
+
+        // 3. Simulamos que pasan exactamente los 30 días
+        Utilitarios.definirHoy(Utilitarios.hoy().plusDays(30));
+
+        // 4. Ejecutamos el Bonus Track
+        billetera.procesarInversionesQueVencenHoy();
+
+        // 5. Validamos los resultados
+        // El total invertido de Alice debe volver a 0 porque la inversión finalizó
+        assertEquals(0.0, billetera.obtenerTotalInvertido("11111111"), 0.01);
+        
+        // El saldo debe ser: 1.500.000 + 500.000 + los intereses ganados al 100%
+        // Intereses: 500.000 * (0.20 / 365) * 30
+        double interesesEsperados = 500000 * (0.20 / 365) * 30;
+        double saldoEsperado = 1500000 + 500000 + interesesEsperados;
+        
+        assertEquals(saldoEsperado, billetera.obtenerSaldoDisponible(cvuAlice), 0.01);
+    }
+    
+ 
 
 }
