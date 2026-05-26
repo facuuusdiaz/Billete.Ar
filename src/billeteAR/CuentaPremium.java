@@ -15,7 +15,8 @@ public class CuentaPremium extends Cuenta {
     @Override
     public void aplicarMultiplicador(double tasa) {
         if (this.saldo >= saldoMinimo) {
-            this.saldo = this.saldo * tasa;
+        	//Se suma el interes al saldo existente
+            this.saldo += this.saldo * tasa;
             this.cantidadTransacciones++;
             System.out.println("Multiplicador Premium aplicado. Nuevo saldo: $" + this.saldo);
         } else {

@@ -29,11 +29,18 @@ public class Cliente {
     
     @Override
     public String toString() {
-        String info = "Cliente: " + nombre + " (DNI: " + dni + ") | Total Invertido: $" + totalInvertido + "\n";
+        // Uso obligatorio de StringBuilder para modificaciones
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cliente: ").append(nombre)
+          .append(" (DNI: ").append(dni)
+          .append(") | Total Invertido: $").append(totalInvertido)
+          .append("\n");
+        
+        // Uso de foreach para recorrer colecciones (Requerimiento ii)
         for (Cuenta c : cuentas) {
-            info += "    -> " + c.toString() + "\n";
+            sb.append("    -> ").append(c.toString()).append("\n");
         }
-        return info;
+        return sb.toString();
     }
 	
     public double obtenerTotalInvertido() { return this.totalInvertido; }

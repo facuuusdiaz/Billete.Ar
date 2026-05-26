@@ -12,12 +12,15 @@ public class TransaccionInversion extends Actividad {
 
     @Override
     public String obtenerTextoFormateado() {
-        return "inversion:\n" +
-        		"fecha: " + this.fechaHora + "\n" +
-               "origen: " + dniOrigen + " (" + cvuOrigen + ")\n" +
-               "desc: " + tipoInversion + "\n" +
-               "monto: " + monto + "\n" +
-               "plazo: " + plazo + "\n" +
-               (aprobado ? "[Aprovado]" : "[Rechazado]");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Inversion:\n")
+          .append("fecha: ").append(this.fechaHora).append("\n")
+          .append("origen: ").append(dniOrigen).append(" (").append(cvuOrigen).append(")\n")
+          .append("desc: ").append(tipoInversion).append("\n")
+          .append("monto: ").append(monto).append("\n")
+          .append("plazo: ").append(plazo).append("\n")
+          .append(aprobado ? "[Aprobado]" : "[Rechazado]");
+          
+        return sb.toString();
     }
 }

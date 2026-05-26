@@ -17,9 +17,11 @@ public class CuentaCoorpo extends Cuenta {
     @Override
     public void aplicarMultiplicador(double tasa) {
         if (certificacion) {
-            this.saldo = this.saldo * (tasa * 1.10); 
+        	//Se le suma al saldo el interes con un 10% extra de beneficio
+            this.saldo += this.saldo * (tasa * 1.10); 
         } else {
-            this.saldo = this.saldo * tasa;
+        	//Se suma el interes normal
+            this.saldo += this.saldo * tasa;
         }
         this.cantidadTransacciones++;
         System.out.println("Multiplicador Corporativo aplicado para la empresa CUIT: " + this.cuitEmpresa + ". Nuevo saldo: $" + this.saldo);

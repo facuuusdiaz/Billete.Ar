@@ -13,18 +13,10 @@ public abstract class Cuenta {
     public Cuenta(String dniUsuario, String alias, double saldo) {
         this.dniUsuario = dniUsuario;
         this.alias = alias;
-        this.cvu = generarCVU(); // El CVU sigue autogenerándose de forma segura
+        this.cvu = Utilitarios.generarSiguienteCvu();
         this.saldo = saldo;
         this.historial = new ArrayList<>();
         this.cantidadTransacciones = 0;
-    }
-
-    private String generarCVU() {
-        StringBuilder nuevoCvu = new StringBuilder();
-        for (int i = 0; i < 22; i++) {
-            nuevoCvu.append((int) (Math.random() * 10));
-        }
-        return nuevoCvu.toString();
     }
 
     public String obtenerFormatoLista() {

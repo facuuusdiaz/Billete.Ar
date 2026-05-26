@@ -24,10 +24,12 @@ public class CuentaRegular extends Cuenta {
 
     @Override
     public void aplicarMultiplicador(double tasa) {
-        double nuevoSaldo = this.saldo * tasa;
+    	//Calculamos cuanto seria el saldo con los intereses sumados
+        double nuevoSaldo = this.saldo + (this.saldo * tasa);
         if (nuevoSaldo <= saldoMax) {
             this.saldo = nuevoSaldo;
         } else {
+        	//Ponemos el tope de 5M
             this.saldo = saldoMax; 
         }
         this.cantidadTransacciones++;
