@@ -1,4 +1,4 @@
-package billeteAR;
+	package billeteAR;
 
 import java.util.HashMap;
 import java.time.LocalDate;
@@ -178,7 +178,7 @@ public class Billete implements IBilletera {
         Inversiones inv = inversionesPorId.get(idInversion);
         Cuenta c = cuentasPorCvu.get(cvu);
         Cliente cl = clientes.get(dni);
-        if (inv == null || c == null || cl == null) throw new RuntimeException("Parámetros de cancelación erróneos.");
+        if (inv == null || c == null || cl == null) throw new IllegalArgumentException("Parámetros de cancelación erróneos.");
 
         double reintegro = inv.cancelar(c);
         c.depositar(reintegro);
