@@ -4,7 +4,6 @@ public class CuentaCoorpo extends Cuenta {
     private String cuitEmpresa;
     private boolean certificacion;
 
-    // CONSTRUCTOR CORREGIDO
     public CuentaCoorpo(String dniUsuario, String alias, double saldo, String cuitEmpresa, boolean certificacion) {
         super(dniUsuario, alias, saldo); 
         this.cuitEmpresa = cuitEmpresa;

@@ -3,7 +3,6 @@ package billeteAR;
 public class CuentaRegular extends Cuenta {
     private double saldoMax;
 
-    // CONSTRUCTOR CORREGIDO: Ahora recibe y pasa el alias al super()
     public CuentaRegular(String dniUsuario, String alias, double saldo, double saldoMax) {
         super(dniUsuario, alias, saldo); 
         this.saldoMax = saldoMax;
@@ -16,7 +15,6 @@ public class CuentaRegular extends Cuenta {
     @Override
     public void depositar(double monto) {
         if (this.saldo + monto > this.saldoMax) {
-            // CAMBIO: Ahora lanza IllegalStateException
             throw new IllegalStateException("El depósito supera el límite máximo de 5 millones.");
         }
         this.saldo += monto;

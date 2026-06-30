@@ -3,7 +3,6 @@ package billeteAR;
 public class CuentaPremium extends Cuenta {
     private double saldoMinimo;
 
-    // CONSTRUCTOR CORREGIDO
     public CuentaPremium(String dniUsuario, String alias, double saldo, double saldoMinimo) {
         super(dniUsuario, alias, saldo); 
         this.saldoMinimo = saldoMinimo;

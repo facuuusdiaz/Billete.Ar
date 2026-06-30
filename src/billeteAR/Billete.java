@@ -67,7 +67,6 @@ public class Billete implements IBilletera {
         Cliente cl = clientes.get(dniUsuario);
         if (cl == null) throw new RuntimeException("Usuario inexistente.");
         
-        // CAMBIO: Ahora lanza IllegalArgumentException
         if (depositoInicial < 500000.0) throw new IllegalArgumentException("No cumple el depósito mínimo.");
         
         validarAliasUnico(alias);
@@ -149,7 +148,6 @@ public class Billete implements IBilletera {
 
     @Override
     public int realizarInversionRentaFija(String dni, String cvu, double monto, int plazoDias) {
-        // CAMBIO: Tasa al 0.20 para que coincida con la prueba de precancelar renta fija
         Inversiones inv = new RentaFija(monto, plazoDias, 0.20);
         return ejecutarInversionGenerica(dni, cvu, monto, inv, plazoDias);
     }
@@ -165,7 +163,6 @@ public class Billete implements IBilletera {
     public int realizarInversionLiquidez(String dni, String cvu, double monto, int plazoDias) {
         Cuenta c = cuentasPorCvu.get(cvu);
         
-        // CAMBIO: Ahora lanza IllegalArgumentException
         if (!(c instanceof CuentaCoorpo)) throw new IllegalArgumentException("Solo permitido desde cuentas corporativas.");
         if (monto < 20000000.0) throw new IllegalArgumentException("Monto mínimo de inversión líquida: 20 millones.");
 
@@ -193,7 +190,7 @@ public class Billete implements IBilletera {
         for (Cuenta c : cuentasPorCvu.values()) {
             if (c.getAlias().equalsIgnoreCase(alias)) return c.getCvu();
         }
-        // CAMBIO: Ahora lanza IllegalArgumentException
+
         throw new IllegalArgumentException("Alias no registrado.");
     }
 
